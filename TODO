@@ -1,0 +1,2 @@
+- fix the HACKS (waiting for arbitrary times
+- make this work for threads across cores

@@ -1,0 +1,42 @@
+---
+functions:
+    - name: pthread_create
+      num_args: 4
+      args: ["pthread_t* a0", "const pthread_attr_t* a1", "void *(*a2)(void*)", "void *a3"]
+      override: true
+      ix_compat: false
+      ak_name: nk_thread_start
+      ak_ret: int
+      ak_args: 7
+      arg_defaults: [NULL, NULL, NULL, 0, 0, NULL, 0]
+      arg_mapping: [2, 3, -1, -1, -1, 0, -1]
+
+
+    - name: nk_yield
+      num_args: 0
+      args: []
+      ak_args: 0
+      ak_ret: void
+      ak_name: nk_yield
+      override: false
+
+    - name: printk
+      num_args: 8
+      args: ["char * a0", "uint64_t a1", "uint64_t a2", "uint64_t a3", "uint64_t a4", "uint64_t a5", "uint64_t a6", "uint64_t a7"]
+      ak_args: 8
+      ak_ret: int
+      ak_name: printk
+      arg_mapping: [0, 1, 2, 3, 4, 5, 6, 7]
+      arg_defaults: [NULL, 0, 0, 0, 0, 0, 0, 0]
+      override: false
+      
+    - name: pthread_join
+      num_args: 2
+      args: ["pthread_t a0", "void ** a1"]
+      override: true
+      ix_compat: true
+      ak_name: nk_join
+      ak_ret: int
+      ak_args: 2
+      arg_defaults: [NULL, NULL]
+      arg_mapping: [0, 1]
