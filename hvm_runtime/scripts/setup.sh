@@ -42,9 +42,9 @@ pushd guest-kernel
 echo "Preparing guest kernel"
 git clone https://github.com/torvalds/linux.git
 pushd linux
-cp ../../configs/linux-config .config
-make modules_prepare
-make bzImage -j `nprocs`
+make defconfig
+make modules_prepare -j `nproc`
+make bzImage -j `nproc`
 popd
 popd
 
