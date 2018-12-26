@@ -1,0 +1,23 @@
+#!/bin/sh
+mount -t proc none /proc
+mount -t sysfs none /sys
+mount -t devtmpfs devtmpfs /dev
+mkdir /mnt
+mount /dev/sda /mnt
+touch /etc/group
+touch /etc/passwd
+chmod 644 /etc/group /etc/passwd
+
+addgroup -g 0 root
+adduser -D -H -G root -u 0 root
+
+insmod /mnt/hvm-driver.ko
+mknod /dev/hvm c 244 0
+
+sleep 2
+
+cat <<!
+Welcome to HVM/Multiverse test kernel (Linux kernel $(uname -r))
+!
+
+setsid /bin/sh -c "exec /bin/sh </dev/ttyS0 >/dev/ttyS0 2>&1"

@@ -1,14 +1,14 @@
 MYCC:=gcc
 MYCFLAGS:= -Wall -O2
 
-GUEST_KERN_DIR:=/home/kyle/cs562/p3-device/linux
-INITRAMFS_DIR:=busybox-1.29.3/initramfs/bb-x86
+GUEST_KERN_DIR:=guest-kernel/linux
+INITRAMFS_DIR:=bb/busybox/initramfs/bb-x86
 
 OBJ_LIST := hvm-user hvm-driver.ko
 
 THEDIR=$(PWD)
 
-all: $(OBJ_LIST)
+all: $(OBJ_LIST) hdd initramfs
 
 hvm-user: hvm-user.c
 	$(MYCC) $(MYCFLAGS) -static -o $@ $<
@@ -32,12 +32,15 @@ hdd: $(OBJ_LIST)
 	@sudo umount _test
 	@sudo rm -rf _test
 
+setup:
+	@scripts/setup.sh
+
 run:
 	@scripts/runit.sh
 
 
 clean:
-	@rm -f hvm-user *.cpio.gz
+	@rm -f hvm-user *.cpio.gz *.img
 	$(MAKE) -C $(GUEST_KERN_DIR) M=$(PWD) clean
 
-.PHONY: clean
+.PHONY: clean run hdd initramfs setup
