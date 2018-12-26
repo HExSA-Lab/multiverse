@@ -10,6 +10,7 @@ mkdir -pv obj/bb-x86
 echo "Building BusyBox"
 make O=obj/bb-x86 defconfig
 cp ../../configs/bb-config obj/bb-x86/.config
+cp ../../configs/bb-config .config
 pushd obj/bb-x86
 make -j `nproc` 
 make install
@@ -27,7 +28,7 @@ cp configs/init bb/busybox/initramfs/bb-x86/
 
 mkdir qemu
 pushd qemu
-git clone git@github.com:HExSA-Lab/qemu.git
+git clone https://github.com/HExSA-Lab/qemu.git
 pushd qemu
 echo "Building QEMU"
 ./configure --target-list=x86_64-softmmu --enable-debug
